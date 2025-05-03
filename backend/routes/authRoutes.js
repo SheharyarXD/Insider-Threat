@@ -32,6 +32,8 @@ router.post('/register', async (req, res) => {
       login_time: new Date(),
       logout_time: null, 
       duration: 0, 
+      ip_address,
+      location
     });
 
     res.status(201).json({ message: 'User registered successfully', user: newUser });
@@ -43,7 +45,7 @@ router.post('/register', async (req, res) => {
 
 // User Login
 router.post('/login', async (req, res) => {
-  const { email, password,ip_address } = req.body;
+  const { email, password,ip_address,location } = req.body;
 
   try {
     const userIp =ip_address;
@@ -72,6 +74,8 @@ router.post('/login', async (req, res) => {
       login_time: new Date(),
       logout_time: null,  
       duration: 0, 
+      ip_address,
+      location
     });
     let user_id =user.id;
     res.status(200).json({ message: 'Login successful', token,user_id });

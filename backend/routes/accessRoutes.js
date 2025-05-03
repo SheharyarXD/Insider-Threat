@@ -3,13 +3,15 @@ const AccessLog = require('../models/AccessLog');
 const router = express.Router();
 
 router.post('/api/login', async (req, res) => {
-  const { user_id } = req.body;
+  const { user_id,ip_address,location } = req.body;
   try {
     const accessLog = await AccessLog.create({
       user_id,
       login_time: new Date(),
       logout_time: null,
       duration: 0, 
+      ip_address,
+      location
     });
 
     res.json({ message: 'Login time recorded', accessLog });
