@@ -63,7 +63,7 @@
 
     setInterval(() => {
       if (pattern.length > 0) {
-        axios.post('http://localhost:5000/api/keystroke', {
+        axios.post('https://insider-threat-backend.vercel.app/api/keystroke', {
           user_id: localStorage.getItem('user_id'),
           pattern: pattern
         })
@@ -87,7 +87,7 @@
         const x = event.clientX;
         const y = event.clientY;
 
-        axios.post('http://localhost:5000/api/mouse', { user_id: localStorage.getItem('user_id'), x, y })
+        axios.post('https://insider-threat-backend.vercel.app/api/mouse', { user_id: localStorage.getItem('user_id'), x, y })
           .then(() => {
             lastSentTime = Date.now();
           })
@@ -110,7 +110,7 @@
       const user_id = decodedToken.userId;
 
       try {
-        const response = await fetch('http://localhost:5000/api/auth/logout', {
+        const response = await fetch('https://insider-threat-backend.vercel.app/api/auth/logout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -146,7 +146,7 @@
 
     async function fetchBlockedKeys(userId) {
       try {
-        const response = await axios.get(`http://localhost:5000/api/blocked-keys/user/${userId}`, {
+        const response = await axios.get(`https://insider-threat-backend.vercel.app/api/blocked-keys/user/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         return response.data.map(keyObj => keyObj.key);
@@ -191,7 +191,7 @@
     });
 
     function sendEventToServer(eventData) {
-      fetch('http://localhost:5000/api/mouse-events/', {
+      fetch('https://insider-threat-backend.vercel.app/api/mouse-events/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

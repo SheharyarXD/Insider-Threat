@@ -112,7 +112,7 @@
     // Load all users
     async function loadUsers() {
       try {
-        const res = await axios.get('http://localhost:5000/api/auth/users', {
+        const res = await axios.get('https://insider-threat-backend.vercel.app/api/auth/users', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -166,7 +166,7 @@
           accessLogList.appendChild(li);
         });
 
-        const keystrokeRes = await axios.get(`http://localhost:5000/api/keystroke/keystroke/${userId}`, {
+        const keystrokeRes = await axios.get(`https://insider-threat-backend.vercel.app/api/keystroke/keystroke/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const words = keystrokeRes.data || [];
@@ -179,7 +179,7 @@
           wordsList.appendChild(li);
         });
 
-        const dataRes = await axios.get(`http://localhost:5000/api/sample-data/user/${userId}`, {
+        const dataRes = await axios.get(`https://insider-threat-backend.vercel.app/api/sample-data/user/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const changes = dataRes.data.changes || [];
@@ -213,7 +213,7 @@
     // fetchAccessLogs 
     async function fetchAccessLogs(userId) {
       try {
-        const res = await axios.get(`http://localhost:5000/api/access-logs/${userId}`, {
+        const res = await axios.get(`https://insider-threat-backend.vercel.app/api/access-logs/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         return res.data;
@@ -299,7 +299,7 @@
       }
 
       try {
-        await axios.post('http://localhost:5000/api/block-ip', { ip, reason }, {
+        await axios.post('https://insider-threat-backend.vercel.app/api/block-ip', { ip, reason }, {
           headers: { Authorization: `Bearer ${token}` }
         });
         alert('IP blocked successfully!');
@@ -313,7 +313,7 @@
     // Load all blocked IPs
     async function loadBlockedIps() {
       try {
-        const res = await axios.get('http://localhost:5000/api/block-ip', {
+        const res = await axios.get('https://insider-threat-backend.vercel.app/api/block-ip', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -349,7 +349,7 @@
       if (!confirm('Are you sure you want to delete this blocked IP?')) return;
 
       try {
-        await axios.delete(`http://localhost:5000/api/block-ip/${id}`, {
+        await axios.delete(`https://insider-threat-backend.vercel.app/api/block-ip/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         alert('Blocked IP deleted.');
@@ -369,7 +369,7 @@
         return;
       }
 
-      axios.put(`http://localhost:5000/api/block-ip/${id}`, { ip: newIp, reason: newReason }, {
+      axios.put(`https://insider-threat-backend.vercel.app/api/block-ip/${id}`, { ip: newIp, reason: newReason }, {
         headers: { Authorization: `Bearer ${token}` }
       }).then(() => {
         alert('Blocked IP updated.');
@@ -385,7 +385,7 @@
 
     async function loadUsers1() {
       try {
-        const res = await axios.get('http://localhost:5000/api/auth/users'); // Endpoint to fetch users
+        const res = await axios.get('https://insider-threat-backend.vercel.app/api/auth/users'); // Endpoint to fetch users
         const userSelect = document.getElementById('userSelect');
         res.data.forEach(user => {
           const option = document.createElement('option');
@@ -418,7 +418,7 @@
 
 
       try {
-        await axios.post('http://localhost:5000/api/blocked-keys', { key, userId, reason });
+        await axios.post('https://insider-threat-backend.vercel.app/api/blocked-keys', { key, userId, reason });
         alert('Key blocked successfully!');
         loadBlockedKeys();
       } catch (error) {
@@ -430,7 +430,7 @@
     // Fetch and display all blocked keys
     async function loadBlockedKeys() {
       try {
-        const res = await axios.get('http://localhost:5000/api/blocked-keys');
+        const res = await axios.get('https://insider-threat-backend.vercel.app/api/blocked-keys');
         const list = document.getElementById('blockedKeysList');
         list.innerHTML = '';
 
@@ -459,7 +459,7 @@
       if (!confirm('Are you sure you want to delete this blocked key?')) return;
 
       try {
-        await axios.delete(`http://localhost:5000/api/blocked-keys/${id}`);
+        await axios.delete(`https://insider-threat-backend.vercel.app/api/blocked-keys/${id}`);
         alert('Blocked key deleted.');
         loadBlockedKeys();
       } catch (error) {
@@ -473,7 +473,7 @@
     function toggleBlockUser(userId, isBlocked) {
       const action = isBlocked ? 'unblock' : 'block';
 
-      axios.post(`http://localhost:5000/api/auth/admin/${action}-user/${userId}`)
+      axios.post(`https://insider-threat-backend.vercel.app/api/auth/admin/${action}-user/${userId}`)
         .then(response => {
           alert(response.data.message);
           location.reload();
@@ -488,7 +488,7 @@
 
 
     async function askDateAndReplayMouse(userId) {
-      const datesResponse = await fetch(`http://localhost:5000/api/mouse-movements/dates/${userId}`);
+      const datesResponse = await fetch(`https://insider-threat-backend.vercel.app/api/mouse-movements/dates/${userId}`);
       const availableDates = await datesResponse.json();
 
       if (!availableDates.length) {
@@ -594,9 +594,9 @@
         }
 
         // Fetch all data
-        const movementsRes = await fetch(`http://localhost:5000/api/mouse-movements/${userId}?date=${selectedDate}`);
-        const eventsRes = await fetch(`http://localhost:5000/api/mouse-events/${userId}?date=${selectedDate}`);
-        const keystrokesRes = await fetch(`http://localhost:5000/api/keystroke/date/${userId}?date=${selectedDate}`);
+        const movementsRes = await fetch(`https://insider-threat-backend.vercel.app/api/mouse-movements/${userId}?date=${selectedDate}`);
+        const eventsRes = await fetch(`https://insider-threat-backend.vercel.app/api/mouse-events/${userId}?date=${selectedDate}`);
+        const keystrokesRes = await fetch(`https://insider-threat-backend.vercel.app/api/keystroke/date/${userId}?date=${selectedDate}`);
 
         let movements = await movementsRes.json();
         let events = await eventsRes.json();
