@@ -11,7 +11,7 @@ const accessLogRoutes = require('./routes/accessRoutes');
 const blockedIpRoutes = require('./routes/BlockedIPRoutes');
 const blockedkeysRoutes=require('./routes/blockedKeyRoutes')
 const mouseMovementRoutes=require('./routes/mouseMovementRoutes')
-
+const mouseEventRoutes = require('./routes/mouseEventRoutes');
 
 require('dotenv').config();
 
@@ -26,6 +26,7 @@ app.use('/api/sample-data', sampleDataRoutes);
 app.use('/api/access-logs', accessLogRoutes);
 app.use('/api/block-ip', blockedIpRoutes);
 app.use('/api/blocked-keys', blockedkeysRoutes);
+app.use('/api/mouse-events', mouseEventRoutes);
 app.use('/api/mouse-movements', mouseMovementRoutes);
 
 sequelize.sync().then(() => {

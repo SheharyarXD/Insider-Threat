@@ -126,26 +126,36 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-  const inputs = document.querySelectorAll('input, textarea, select ,td'); 
-  inputs.forEach(input => {
-    input.addEventListener('input', (event) => {
-      const userInput = event.target.value;
+  const table = document.querySelector('#dataTable');
+
+  table.addEventListener('input', (event) => {
+    const target = event.target;
+    
+    if (target.matches('td[contenteditable="true"]')) {
+      const userInput = target.innerText.trim();
+
       if (isMalicious(userInput)) {
-        event.preventDefault();
         sendMaliciousInputToAdmin(userInput);
         alert('Your input contains potentially harmful content. The admin has been notified.');
-        const inputFields = document.querySelectorAll('.edit-name, .edit-value, input');
-      inputFields.forEach(field => {
-        if (field.isContentEditable) {
-          field.innerHTML = '';  
-        } else {
-          field.value = '';  
-        }
-      });
+
+        target.innerText = '';
+      }
+    }
+  });
+
+  const inputs = document.querySelectorAll('input, textarea, select');
+  inputs.forEach(input => {
+    input.addEventListener('input', (event) => {
+      const userInput = event.target.value.trim();
+      if (isMalicious(userInput)) {
+        sendMaliciousInputToAdmin(userInput);
+        alert('Your input contains potentially harmful content. The admin has been notified.');
+        event.target.value = '';
       }
     });
   });
 });
+
 
 function isMalicious(input) {
   const sqlInjectionPatterns = /(\b(select|insert|delete|drop|update|alter|union|--|;|=|from)\b)/i;
